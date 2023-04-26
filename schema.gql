@@ -1,0 +1,17 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserObject {
+  email: String!
+  role: Status!
+}
+
+enum Status {
+  admin
+  user
+}
+
+type Query {
+  user: UserObject!
+}
