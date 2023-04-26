@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { getSecret } from 'src/config/jwt-secret';
+import { getSecret } from 'src/config';
 import { UserModule } from '../user/user.module';
 import { AuthResolver } from './graphql/auth.resolver';
 import { JwtStrategy } from './jwt.strategy';
