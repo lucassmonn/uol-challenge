@@ -6,7 +6,6 @@ import { UserModule } from '../user/user.module';
 import { AuthResolver } from './graphql/auth.resolver';
 import { JwtStrategy } from './jwt.strategy';
 import { LoginUseCase } from './usecases/login.usecase';
-import { VerifyTokenUseCase } from './usecases/verify-token.usecase';
 
 @Module({
   imports: [
@@ -17,7 +16,7 @@ import { VerifyTokenUseCase } from './usecases/verify-token.usecase';
     }),
     UserModule,
   ],
-  providers: [LoginUseCase, AuthResolver, VerifyTokenUseCase, JwtStrategy],
-  exports: [LoginUseCase, AuthResolver, VerifyTokenUseCase, JwtStrategy],
+  providers: [LoginUseCase, AuthResolver, JwtStrategy],
+  exports: [LoginUseCase, AuthResolver, JwtStrategy],
 })
 export class AuthModule {}

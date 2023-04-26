@@ -1,12 +1,13 @@
 import { UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
+import { AdminGuard } from 'src/shared/guards/admin.guard';
 import { JwtGuard } from 'src/shared/guards/auth.guard';
 import { RoleEnum } from '../enum/role.enum';
 import { UserObject } from './user.object';
 
 @Resolver(() => UserObject)
 export class UserResolver {
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, AdminGuard)
   @Query(() => [UserObject])
   listUsers(): [UserObject] {
     return [
