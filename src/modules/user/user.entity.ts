@@ -15,7 +15,7 @@ export class UserEntity extends Document {
     enum: RoleEnum,
     default: RoleEnum.user,
   })
-  RoleEnum: RoleEnum;
+  role: RoleEnum;
 
   @Prop({ select: false, required: true })
   password: string;

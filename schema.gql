@@ -12,6 +12,18 @@ enum Status {
   user
 }
 
+type LoginObject {
+  token: String!
+}
+
 type Query {
   listUsers: [UserObject!]!
+}
+
+type Mutation {
+  login(input: LoginInput!): LoginObject!
+}
+
+input LoginInput {
+  email: String!
 }
