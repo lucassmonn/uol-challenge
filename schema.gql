@@ -13,5 +13,5 @@ enum Status {
 }
 
 type Query {
-  user: UserObject!
+  listUsers: [UserObject!]!
 }
