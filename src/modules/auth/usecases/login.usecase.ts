@@ -1,4 +1,4 @@
-import { UserRepository } from '@modules/user/user.repository';
+import { FindOneUserUseCase } from '@modules/user/usecases/find-one.usecase';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UseCaseBase } from '@shared/base/usecase.base';
@@ -8,12 +8,12 @@ import { LoginInput } from '../inputs/login.input';
 @Injectable()
 export class LoginUseCase implements UseCaseBase<LoginInput, LoginObject> {
   constructor(
-    private userRepository: UserRepository,
+    private findOneUser: FindOneUserUseCase,
     private jwtService: JwtService,
   ) {}
 
   async execute(request: LoginInput): Promise<LoginObject> {
-    const user = await this.userRepository.findByEmail(request.email);
+    const user = await this.findOneUser.execute({ email: request.email });
     if (!user) throw new Error('User not found');
 
     return {

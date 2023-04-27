@@ -7,7 +7,11 @@ export abstract class RepositoryBase<E> {
     return this.model.create(entity);
   }
 
-  async list(): Promise<E[]> {
-    return this.model.find();
+  async list(filter: Partial<E>): Promise<E[]> {
+    return this.model.find(filter).lean();
+  }
+
+  async findOne(filter: Partial<E>): Promise<E> {
+    return this.model.findOne(filter).lean();
   }
 }

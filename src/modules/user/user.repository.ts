@@ -11,8 +11,4 @@ export class UserRepository extends RepositoryBase<UserEntity> {
   ) {
     super(userModel);
   }
-
-  async findByEmail(email: string): Promise<UserEntity> {
-    return await this.userModel.findOne({ email }).lean();
-  }
 }
