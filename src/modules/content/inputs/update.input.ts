@@ -1,11 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 import { ContentTypeEnum } from '../enum/type.enum';
 
 @InputType()
 export class UpdateContentInput {
   @Field(() => String, { nullable: false })
-  _id: ObjectId;
+  _id: Types.ObjectId;
 
   @Field(() => ContentTypeEnum, { nullable: true })
   type?: ContentTypeEnum;

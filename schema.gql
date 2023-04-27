@@ -24,6 +24,24 @@ type LoginObject {
   token: String!
 }
 
+type ContentObject {
+  _id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  type: ContentType!
+  title: String!
+  description: String!
+  url: String!
+  viewedBy: [UserObject!]!
+  views: Float!
+}
+
+enum ContentType {
+  video
+  pdf
+  image
+}
+
 type Query {
   me: UserObject!
   users: [UserObject!]!
@@ -31,8 +49,30 @@ type Query {
 
 type Mutation {
   login(input: LoginInput!): LoginObject!
+  createContent(input: CreateContentInput!): ContentObject!
+  updateContent(input: UpdateContentInput!): ContentObject!
+  deleteContent(input: DeleteContentInput!): ContentObject!
 }
 
 input LoginInput {
   email: String!
+}
+
+input CreateContentInput {
+  type: ContentType!
+  title: String!
+  description: String!
+  url: String!
+}
+
+input UpdateContentInput {
+  _id: String!
+  type: ContentType
+  title: String
+  description: String
+  url: String
+}
+
+input DeleteContentInput {
+  _id: String!
 }

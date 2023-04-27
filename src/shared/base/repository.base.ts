@@ -16,7 +16,9 @@ export abstract class RepositoryBase<E> {
   }
 
   async updateOne(filter: Partial<E>, entity: Partial<E>): Promise<E> {
-    return await this.model.updateOne(filter, entity).lean();
+    return await this.model
+      .findOneAndUpdate(filter, entity, { new: true })
+      .lean();
   }
 
   async deleteOne(filter: Partial<E>): Promise<{

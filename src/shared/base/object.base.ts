@@ -1,10 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 
 @ObjectType({ isAbstract: true })
 export abstract class ObjectBase {
   @Field(() => String)
-  _id: ObjectId;
+  _id: Types.ObjectId;
 
   @Field(() => Date)
   createdAt: Date;

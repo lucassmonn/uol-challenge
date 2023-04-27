@@ -8,6 +8,7 @@ export abstract class ResolverBase {
     try {
       return await useCase.execute(input);
     } catch (error) {
+      console.log(error);
       return error;
     }
   }
