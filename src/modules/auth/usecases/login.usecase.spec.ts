@@ -43,7 +43,7 @@ describe('LoginUseCase', () => {
     expect(result).toEqual({ token });
   });
 
-  it('should fail login due to user not found', async () => {
+  it('should fail if user not found', async () => {
     const email = 'test@example.com';
 
     userRepository.findByEmail = jest.fn().mockResolvedValue(null);
@@ -54,7 +54,7 @@ describe('LoginUseCase', () => {
     );
   });
 
-  it('should fail login due to JWT token generation failure', async () => {
+  it('should fail if JWT token generation throws', async () => {
     const email = 'test@example.com';
     const user = { email, role: 'user', _id: '123' };
 
