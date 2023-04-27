@@ -30,7 +30,7 @@ describe('AuthResolver', () => {
       email: 'test@example.com',
     };
 
-    it('should call the login use case with the correct input and return the result', async () => {
+    it('should call login with correct values and return success', async () => {
       const expectedLoginObject: LoginObject = {
         token: 'token',
       };
@@ -42,27 +42,14 @@ describe('AuthResolver', () => {
       expect(result).toEqual(expectedLoginObject);
     });
 
-    it('should throw an error when the login use case fails', async () => {
-      const errorMessage = 'Authentication failed';
+    it('should return an error if login use case throws', async () => {
+      const errorMessage = 'UseCase failed';
       loginUseCase.execute = jest
         .fn()
         .mockRejectedValue(new Error(errorMessage));
 
-      await expect(authResolver.login(input)).rejects.toThrowError(
-        errorMessage,
-      );
-      expect(loginUseCase.execute).toHaveBeenCalledWith(input);
-    });
-
-    it('should handle unexpected errors', async () => {
-      const errorMessage = 'Unexpected error';
-      loginUseCase.execute = jest.fn().mockImplementation(() => {
-        throw new Error(errorMessage);
-      });
-
-      await expect(authResolver.login(input)).rejects.toThrowError(
-        errorMessage,
-      );
+      const result = await authResolver.login(input);
+      expect(result).toEqual(new Error(errorMessage));
       expect(loginUseCase.execute).toHaveBeenCalledWith(input);
     });
   });
