@@ -1,7 +1,8 @@
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'mongoose';
 
-export class ObjectBase {
+@ObjectType({ isAbstract: true })
+export abstract class ObjectBase {
   @Field(() => String)
   _id: ObjectId;
 

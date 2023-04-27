@@ -1,6 +1,6 @@
 import { UseCaseBase } from './usecase.base';
 
-export class ResolverBase {
+export abstract class ResolverBase {
   async callUseCase<Input, Output>(
     useCase: UseCaseBase<Input, Output>,
     input: Input,
