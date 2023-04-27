@@ -1,20 +1,19 @@
 import { UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
+import { ResolverBase } from '@shared/base/resolver.base';
 import { AdminGuard } from '@shared/guards/admin.guard';
 import { JwtGuard } from '@shared/guards/auth.guard';
-import { RoleEnum } from '../enum/role.enum';
+import { ListUsersUseCase } from '../usecases/list.usecase';
 import { UserObject } from './user.object';
 
 @Resolver(() => UserObject)
-export class UserResolver {
+export class UserResolver extends ResolverBase {
+  constructor(private readonly listUsers: ListUsersUseCase) {
+    super();
+  }
   @UseGuards(JwtGuard, AdminGuard)
   @Query(() => [UserObject])
-  listUsers(): [UserObject] {
-    return [
-      {
-        email: 'admin@test.com',
-        role: RoleEnum.admin,
-      },
-    ];
+  async users(): Promise<[UserObject]> {
+    return await this.callUseCase(this.listUsers, {});
   }
 }

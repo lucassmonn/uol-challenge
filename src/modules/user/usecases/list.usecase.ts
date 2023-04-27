@@ -6,13 +6,13 @@ import { userMapper } from '../user.mapper';
 import { UserRepository } from '../user.repository';
 
 @Injectable()
-export class FindOneUserUseCase
-  implements UseCaseBase<Partial<UserEntity>, UserObject>
+export class ListUsersUseCase
+  implements UseCaseBase<Partial<UserEntity>, UserObject[]>
 {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(request: Partial<UserEntity>): Promise<UserObject> {
-    const user = await this.userRepository.findOne(request);
-    return userMapper.mapEntityToObject(user);
+  async execute(request?: Partial<UserEntity>): Promise<UserObject[]> {
+    const users = await this.userRepository.find(request);
+    return userMapper.mapEntityToObjectArray(users);
   }
 }
