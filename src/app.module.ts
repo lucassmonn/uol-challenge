@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { envsValidator } from './config';
 import { AuthModule } from './modules/auth/auth.module';
+import { ContentModule } from './modules/content/content.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -30,6 +31,7 @@ import { UserModule } from './modules/user/user.module';
     }),
     UserModule,
     AuthModule,
+    ContentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

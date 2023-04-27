@@ -19,7 +19,10 @@ export abstract class RepositoryBase<E> {
     return await this.model.updateOne(filter, entity).lean();
   }
 
-  async deleteOne(filter: Partial<E>): Promise<E> {
+  async deleteOne(filter: Partial<E>): Promise<{
+    deletedCount?: number;
+    acknowledged?: boolean;
+  }> {
     return await this.model.deleteOne(filter).lean();
   }
 }

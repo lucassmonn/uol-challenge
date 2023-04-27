@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { BaseEntity } from '@shared/base/entity.base';
+import { EntityBase } from '@shared/base/entity.base';
 import { Document } from 'mongoose';
 import { RoleEnum } from './enum/role.enum';
 
@@ -7,7 +7,7 @@ import { RoleEnum } from './enum/role.enum';
   timestamps: true,
   collection: 'users',
 })
-export class UserEntity extends BaseEntity<UserEntity> {
+export class UserEntity extends EntityBase<UserEntity> {
   @Prop({ required: true, unique: true })
   email: string;
 

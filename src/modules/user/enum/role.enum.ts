@@ -6,5 +6,5 @@ export enum RoleEnum {
 }
 
 registerEnumType(RoleEnum, {
-  name: 'Status',
+  name: 'Role',
 });

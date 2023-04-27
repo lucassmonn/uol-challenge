@@ -1,7 +1,7 @@
 import { Prop } from '@nestjs/mongoose';
 import { ObjectId } from 'mongoose';
 
-export abstract class BaseEntity<T> {
+export abstract class EntityBase<T> {
   constructor(init?: Partial<T>) {
     Object.assign(this, init);
   }
