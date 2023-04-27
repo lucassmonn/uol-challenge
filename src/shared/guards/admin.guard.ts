@@ -1,7 +1,7 @@
+import { RoleEnum } from '@modules/user/enum/role.enum';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
-import { RoleEnum } from 'src/modules/user/enum/role.enum';
 
 @Injectable()
 export class AdminGuard implements CanActivate {

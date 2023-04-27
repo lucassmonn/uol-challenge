@@ -1,7 +1,7 @@
+import { UserRepository } from '@modules/user/user.repository';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from 'src/modules/user/user.repository';
-import { UseCaseBase } from 'src/shared/base/usecase.base';
+import { UseCaseBase } from '@shared/base/usecase.base';
 import { LoginObject } from '../graphql/login.object';
 import { LoginInput } from '../inputs/login.input';
 
@@ -14,6 +14,7 @@ export class LoginUseCase implements UseCaseBase<LoginInput, LoginObject> {
 
   async execute(request: LoginInput): Promise<LoginObject> {
     const user = await this.userRepository.findByEmail(request.email);
+    if (!user) throw new Error('User not found');
 
     return {
       token: this.jwtService.sign({

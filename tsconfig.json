@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@modules/*": ["src/modules/*"],
+      "@shared/*": ["src/shared/*"]
+    },
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,

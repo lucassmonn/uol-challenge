@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
-import { AdminGuard } from 'src/shared/guards/admin.guard';
-import { JwtGuard } from 'src/shared/guards/auth.guard';
+import { AdminGuard } from '@shared/guards/admin.guard';
+import { JwtGuard } from '@shared/guards/auth.guard';
 import { RoleEnum } from '../enum/role.enum';
 import { UserObject } from './user.object';
 
