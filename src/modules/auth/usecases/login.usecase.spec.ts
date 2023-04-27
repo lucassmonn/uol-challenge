@@ -54,7 +54,7 @@ describe('LoginUseCase', () => {
     );
   });
 
-  it('should fail if JWT token generation throws', async () => {
+  it('should throw if JWT token generation throws', async () => {
     const email = 'test@example.com';
     const user = { email, role: 'user', _id: '123' };
 
@@ -69,7 +69,7 @@ describe('LoginUseCase', () => {
     );
   });
 
-  it('should handle unexpected exceptions', async () => {
+  it('should throw unexpected exceptions', async () => {
     const email = 'test@example.com';
 
     userRepository.findByEmail = jest.fn().mockImplementation(() => {
