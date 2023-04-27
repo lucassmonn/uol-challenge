@@ -10,6 +10,8 @@ const mapEntityToObject = (entity: ContentEntity): ContentObject => ({
   type: entity.type,
   url: entity.url,
   updatedAt: entity.updatedAt,
+  viewedBy: entity.viewedBy,
+  views: entity.viewedBy.length,
 });
 
 const mapEntityToObjectArray = (entities: ContentEntity[]): ContentObject[] =>

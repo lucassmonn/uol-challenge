@@ -20,6 +20,6 @@ import { UserRepository } from './user.repository';
     FindOneUserUseCase,
     ListUsersUseCase,
   ],
-  exports: [UserResolver, FindOneUserUseCase],
+  exports: [UserResolver, FindOneUserUseCase, ListUsersUseCase],
 })
 export class UserModule {}

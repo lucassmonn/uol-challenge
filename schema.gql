@@ -20,8 +20,20 @@ enum Role {
   user
 }
 
+type PaginatedUser {
+  total: Float!
+  page: Float!
+  perPage: Float!
+  data: [UserObject!]!
+}
+
 type LoginObject {
   token: String!
+}
+
+type MessageOutput {
+  status: String!
+  message: String!
 }
 
 type ContentObject {
@@ -32,7 +44,7 @@ type ContentObject {
   title: String!
   description: String!
   url: String!
-  viewedBy: [UserObject!]!
+  viewedBy: [UserObject!]
   views: Float!
 }
 
@@ -42,16 +54,40 @@ enum ContentType {
   image
 }
 
+type PaginatedContentObject {
+  total: Float!
+  page: Float!
+  perPage: Float!
+  data: [ContentObject!]!
+}
+
 type Query {
   me: UserObject!
-  users: [UserObject!]!
+  users(input: ListUserInput!): PaginatedUser!
+  contents(input: ListContentInput!): PaginatedContentObject!
+}
+
+input ListUserInput {
+  email: String
+  role: Role
+  pagination: PaginationInput
+}
+
+input PaginationInput {
+  page: Float! = 1
+  perPage: Float! = 10
+}
+
+input ListContentInput {
+  type: ContentType
+  pagination: PaginationInput
 }
 
 type Mutation {
   login(input: LoginInput!): LoginObject!
   createContent(input: CreateContentInput!): ContentObject!
   updateContent(input: UpdateContentInput!): ContentObject!
-  deleteContent(input: DeleteContentInput!): ContentObject!
+  deleteContent(input: DeleteContentInput!): MessageOutput!
 }
 
 input LoginInput {
