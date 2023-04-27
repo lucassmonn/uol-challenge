@@ -1,72 +1,6 @@
-// import { UserEntity } from '@modules/user/user.entity';
-// import { UserRepository } from '@modules/user/user.repository';
-// import { JwtService } from '@nestjs/jwt';
-// import { Test } from '@nestjs/testing';
-// import { LoginInput } from '../inputs/login.input';
-// import { LoginUseCase } from './login.usecase';
-
-// describe('LoginUseCase', () => {
-//   let loginUseCase: LoginUseCase;
-//   let userRepository: UserRepository;
-//   let jwtService: JwtService;
-
-//   beforeEach(async () => {
-//     const moduleRef = await Test.createTestingModule({
-//       providers: [
-//         LoginUseCase,
-//         {
-//           provide: UserRepository,
-//           useValue: {
-//             findByEmail: jest.fn(),
-//           },
-//         },
-//         {
-//           provide: JwtService,
-//           useValue: {
-//             sign: jest.fn(),
-//           },
-//         },
-//       ],
-//     }).compile();
-
-//     loginUseCase = moduleRef.get<LoginUseCase>(LoginUseCase);
-//     userRepository = moduleRef.get<UserRepository>(UserRepository);
-//     jwtService = moduleRef.get<JwtService>(JwtService);
-//   });
-
-//   describe('execute', () => {
-//     it('should return a LoginObject with a JWT token', async () => {
-//       const loginInput: LoginInput = {
-//         email: 'test@example.com',
-//       };
-//       const user = {
-//         email: 'test@example.com',
-//         role: 'user',
-//         _id: '123',
-//       } as UserEntity;
-//       const jwtToken = 'jwt.token';
-
-//       jest.spyOn(userRepository, 'findByEmail').mockResolvedValue(user);
-//       jest.spyOn(jwtService, 'sign').mockReturnValue(jwtToken);
-
-//       const result = await loginUseCase.execute(loginInput);
-
-//       expect(userRepository.findByEmail).toHaveBeenCalledWith(loginInput.email);
-//       expect(jwtService.sign).toHaveBeenCalledWith({
-//         email: user.email,
-//         role: user.role,
-//         sub: user._id,
-//       });
-//       expect(result).toEqual({
-//         token: jwtToken,
-//       });
-//     });
-//   });
-// });
-
 import { UserRepository } from '@modules/user/user.repository';
 import { JwtService } from '@nestjs/jwt';
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { LoginInput } from '../inputs/login.input';
 import { LoginUseCase } from './login.usecase';
 
@@ -76,7 +10,7 @@ describe('LoginUseCase', () => {
   let jwtService: JwtService;
 
   beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
+    const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         LoginUseCase,
         { provide: UserRepository, useValue: {} },
