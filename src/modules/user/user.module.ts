@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserResolver } from './graphql/user.resolver';
-import { FindOneUserUseCase } from './usecases/find-one.usecase';
-import { ListUsersUseCase } from './usecases/list.usecase';
+import { FindOneUserUseCase, ListUsersUseCase } from './usecases';
 import { UserEntity, UserSchema } from './user.entity';
 import { UserRepository } from './user.repository';
 @Module({
