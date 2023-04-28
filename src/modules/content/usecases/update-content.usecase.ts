@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 import { contentMapper } from '../content.mapper';
 import { ContentRepository } from '../content.repository';
 import { ContentObject } from '../graphql/content.object';
-import { UpdateContentInput } from '../inputs/update.input';
+import { UpdateContentInput } from '../inputs/update-content.input';
 
 @Injectable()
 export class UpdateContentUsecase

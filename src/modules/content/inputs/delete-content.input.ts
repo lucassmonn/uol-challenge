@@ -1,7 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { Types } from 'mongoose';
 
 @InputType()
 export class DeleteContentInput {
   @Field(() => String, { nullable: false })
-  _id: string;
+  _id: Types.ObjectId;
 }

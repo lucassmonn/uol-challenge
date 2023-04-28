@@ -17,15 +17,19 @@ import { JwtGuard } from '@shared/guards/auth.guard';
 import { MessageOutput } from '@shared/interfaces/common-output.interface';
 import { FilterQuery, Types } from 'mongoose';
 import { ContentEntity } from '../content.entity';
-import { CreateContentInput } from '../inputs/create.input';
-import { DeleteContentInput } from '../inputs/delete.input';
-import { ListContentInput } from '../inputs/list.input';
-import { UpdateContentInput } from '../inputs/update.input';
-import { CreateContentUseCase } from '../usecases/create.usecase';
-import { DeleteContentUseCase } from '../usecases/delete.usecase';
-import { FindOneContentUseCase } from '../usecases/find-one.usecase';
-import { ListContentsUseCase } from '../usecases/list.usecase';
-import { UpdateContentUsecase } from '../usecases/update.usecase';
+import {
+  CreateContentInput,
+  DeleteContentInput,
+  ListContentInput,
+  UpdateContentInput,
+} from '../inputs';
+import {
+  CreateContentUseCase,
+  DeleteContentUseCase,
+  FindOneContentUseCase,
+  ListContentsUseCase,
+  UpdateContentUsecase,
+} from '../usecases';
 import { ContentObject, PaginatedContentObject } from './content.object';
 
 @Resolver(ContentObject)

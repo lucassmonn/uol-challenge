@@ -4,12 +4,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ContentEntity, ContentSchema } from './content.entity';
 import { ContentRepository } from './content.repository';
 import { ContentResolver } from './graphql/content.resolver';
-import { CreateContentUseCase } from './usecases/create.usecase';
-import { DeleteContentUseCase } from './usecases/delete.usecase';
-import { FindOneContentUseCase } from './usecases/find-one.usecase';
-import { ListContentsUseCase } from './usecases/list.usecase';
-import { UpdateContentUsecase } from './usecases/update.usecase';
-
+import {
+  CreateContentUseCase,
+  DeleteContentUseCase,
+  FindOneContentUseCase,
+  ListContentsUseCase,
+  UpdateContentUsecase,
+} from './usecases';
 @Module({
   imports: [
     MongooseModule.forFeature([

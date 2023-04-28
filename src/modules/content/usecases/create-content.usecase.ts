@@ -3,7 +3,7 @@ import { UseCaseBase } from '@shared/base/usecase.base';
 import { contentMapper } from '../content.mapper';
 import { ContentRepository } from '../content.repository';
 import { ContentObject } from '../graphql/content.object';
-import { CreateContentInput } from '../inputs/create.input';
+import { CreateContentInput } from '../inputs/create-content.input';
 
 @Injectable()
 export class CreateContentUseCase

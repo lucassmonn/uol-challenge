@@ -1,6 +1,6 @@
 import { ContentEntity } from './content.entity';
 import { ContentObject } from './graphql/content.object';
-import { CreateContentInput } from './inputs/create.input';
+import { CreateContentInput } from './inputs/create-content.input';
 
 const mapEntityToObject = (entity: ContentEntity): ContentObject => ({
   _id: entity._id,
