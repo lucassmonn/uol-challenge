@@ -16,6 +16,7 @@ import { AdminGuard } from '@shared/guards/admin.guard';
 import { JwtGuard } from '@shared/guards/auth.guard';
 import { MessageOutput } from '@shared/interfaces/common-output.interface';
 import { FilterQuery, Types } from 'mongoose';
+import { PinoLogger } from 'nestjs-pino';
 import { ContentEntity } from '../content.entity';
 import {
   CreateContentInput,
@@ -42,7 +43,7 @@ export class ContentResolver extends ResolverBase {
     private readonly listContentsUseCase: ListContentsUseCase,
     private readonly findOneContentUseCase: FindOneContentUseCase,
   ) {
-    super();
+    super(new PinoLogger({}));
   }
 
   @UseGuards(JwtGuard, AdminGuard)

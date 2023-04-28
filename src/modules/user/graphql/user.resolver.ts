@@ -5,6 +5,7 @@ import { CurrentUser } from '@shared/decorators/current-user.decorator';
 import { AdminGuard } from '@shared/guards/admin.guard';
 import { JwtGuard } from '@shared/guards/auth.guard';
 import { FilterQuery } from 'mongoose';
+import { PinoLogger } from 'nestjs-pino';
 import { ListUserInput } from '../inputs/list-user.input';
 import { FindOneUserUseCase } from '../usecases/find-one.usecase';
 import { ListUsersUseCase } from '../usecases/list.usecase';
@@ -17,7 +18,7 @@ export class UserResolver extends ResolverBase {
     private readonly listUsers: ListUsersUseCase,
     private readonly findOneUser: FindOneUserUseCase,
   ) {
-    super();
+    super(new PinoLogger({}));
   }
 
   @UseGuards(JwtGuard)

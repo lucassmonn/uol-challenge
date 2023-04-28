@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Types } from 'mongoose';
+import { PinoLogger } from 'nestjs-pino';
 import { RoleEnum } from '../enum/role.enum';
 import { ListUserInput } from '../inputs/list-user.input';
 import { FindOneUserUseCase } from '../usecases/find-one.usecase';
@@ -29,7 +30,15 @@ describe('UserResolver', () => {
             execute: jest.fn(),
           },
         },
+        {
+          provide: PinoLogger,
+          useValue: {
+            setContext: jest.fn(),
+            error: jest.fn(),
+          },
+        },
       ],
+      imports: [],
     }).compile();
 
     resolver = module.get<UserResolver>(UserResolver);
