@@ -95,7 +95,10 @@ describe('UserResolver', () => {
     });
 
     it('should return an empty paginated list of users for invalid input', async () => {
-      const input: ListUserInput = {};
+      const input: ListUserInput = {
+        role: 'invalid' as RoleEnum,
+        pagination: { page: 1, perPage: 10 },
+      };
       const expectedPaginatedUser: PaginatedUser = {
         total: 0,
         data: [],
