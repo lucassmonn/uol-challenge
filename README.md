@@ -5,6 +5,8 @@ Projeto realizado como teste para a empresa UOL EdTech.
 
 As principais tecnologias utilizadas foram: Nestjs, GraphQL e MongoDB.
 
+A estrategia que eu usei foi criar classes abstratas para servir como base para os módulos, ficando tudo mais padronizado.
+Resolvi também criar casos de usos para cada operação invés de um serviço com várias funções.
 
 ## Como rodar
 
