@@ -16,17 +16,16 @@ export class ContentRepository extends RepositoryBase<ContentEntity> {
     filter: FilterQuery<ContentEntity>,
     id: Types.ObjectId,
   ): Promise<ContentEntity> {
-    const test = await this.contentModel
-      .findOneAndUpdate(
-        filter,
-        {
-          $addToSet: { viewedBy: id },
-        },
-        {
-          new: true,
-        },
-      )
-      .lean();
+    const test = await this.contentModel.findOneAndUpdate(
+      filter,
+      {
+        $addToSet: { viewedBy: id },
+      },
+      {
+        new: true,
+        lean: true,
+      },
+    );
 
     return test;
   }
