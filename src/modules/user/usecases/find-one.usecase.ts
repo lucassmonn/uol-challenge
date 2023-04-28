@@ -13,6 +13,7 @@ export class FindOneUserUseCase
 
   async execute(request: Partial<UserEntity>): Promise<UserObject> {
     const user = await this.userRepository.findOne(request);
+    if (!user) throw new Error('User not found');
     return userMapper.mapEntityToObject(user);
   }
 }
