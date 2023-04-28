@@ -72,7 +72,7 @@ describe('FindOneContentUseCase', () => {
       ).rejects.toThrowError('Content not found');
     });
 
-    it('should add view for user role', async () => {
+    it('should add view', async () => {
       contentEntity._id = new Types.ObjectId('644af220e33c0eb8cbd8d882');
       contentEntity.title = 'Test Title';
       contentEntity.description = 'Test Description';
@@ -82,6 +82,36 @@ describe('FindOneContentUseCase', () => {
         _id: new Types.ObjectId(),
         role: RoleEnum.user,
       };
+
+      contentRepository.findOne = jest.fn().mockResolvedValue(contentEntity);
+      contentRepository.addViewIfNotExists = jest.fn().mockResolvedValue({
+        ...contentEntity,
+        viewedBy: [user._id],
+      });
+
+      const result = await findOneContentUseCase.execute({ input, user });
+      const expectedResult = contentMapper.mapEntityToObject(result);
+
+      expect(contentRepository.findOne).toHaveBeenCalledWith(input);
+      expect(contentRepository.addViewIfNotExists).toHaveBeenCalledWith(
+        { _id: contentEntity._id },
+        user._id,
+      );
+      expect(result).toEqual(expectedResult);
+    });
+
+    it('should not add view', async () => {
+      contentEntity._id = new Types.ObjectId('644af220e33c0eb8cbd8d882');
+      contentEntity.title = 'Test Title';
+      contentEntity.description = 'Test Description';
+
+      const input = { _id: contentEntity._id };
+      const user = {
+        _id: new Types.ObjectId(),
+        role: RoleEnum.user,
+      };
+
+      contentEntity.viewedBy = [user._id];
 
       contentRepository.findOne = jest.fn().mockResolvedValue(contentEntity);
       contentRepository.addViewIfNotExists = jest.fn().mockResolvedValue({
