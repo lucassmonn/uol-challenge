@@ -1,3 +1,4 @@
+import { PinoLogger } from 'nestjs-pino';
 import { UseCaseBase } from './usecase.base';
 
 export abstract class ResolverBase {
@@ -6,9 +7,17 @@ export abstract class ResolverBase {
     input: Input,
   ): Promise<Output | Error | any> {
     try {
-      return await useCase.execute(input);
+      const result = await useCase.execute(input);
+      PinoLogger.root.info(
+        { request: input, response: result },
+        `[USECASE] ${useCase.constructor.name} executed successfully`,
+      );
+      return result;
     } catch (error) {
-      console.log(error);
+      PinoLogger.root.error(
+        { request: input, error: error.message },
+        `[USECASE] ${useCase.constructor.name} failed to execute`,
+      );
       return error;
     }
   }

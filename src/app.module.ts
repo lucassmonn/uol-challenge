@@ -1,9 +1,12 @@
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { PinoDefaultConfig } from '@config/pino.config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LoggingInterceptor } from '@shared/interceptors/log.interceptor';
+import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { envsValidator } from './config';
@@ -32,8 +35,11 @@ import { UserModule } from './modules/user/user.module';
     UserModule,
     AuthModule,
     ContentModule,
+    LoggerModule.forRoot({
+      ...PinoDefaultConfig,
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LoggingInterceptor],
 })
 export class AppModule {}
