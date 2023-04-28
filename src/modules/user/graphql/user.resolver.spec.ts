@@ -113,7 +113,7 @@ describe('UserResolver', () => {
 
       expect(result).toEqual(expectedPaginatedUser);
       expect(listUsersUseCase.execute).toHaveBeenCalledWith({
-        filter: {},
+        filter: { role: 'invalid' as RoleEnum },
         pagination: input.pagination,
       });
     });

@@ -1,56 +1,66 @@
+import { JwtService } from '@nestjs/jwt';
+import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoginInput } from '../inputs/login.input';
 import { LoginUseCase } from '../usecases/login.usecase';
 import { AuthResolver } from './auth.resolver';
-import { LoginObject } from './login.object';
 
 describe('AuthResolver', () => {
-  let authResolver: AuthResolver;
-  let loginUseCase: LoginUseCase;
+  let resolver: AuthResolver;
+  let usecase: LoginUseCase;
+  let jwtService: JwtService;
+
+  const loginUseCaseMock = {
+    execute: jest.fn(),
+  };
+
+  const jwtServiceMock = {
+    sign: jest.fn(),
+  };
+
+  const modelMock = {};
 
   beforeEach(async () => {
-    const moduleRef: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthResolver,
-        {
-          provide: LoginUseCase,
-          useValue: {
-            execute: jest.fn(),
-          },
-        },
+        { provide: LoginUseCase, useValue: loginUseCaseMock },
+        { provide: JwtService, useValue: jwtServiceMock },
+        { provide: getModelToken('UserEntity'), useValue: modelMock },
       ],
     }).compile();
 
-    authResolver = moduleRef.get<AuthResolver>(AuthResolver);
-    loginUseCase = moduleRef.get<LoginUseCase>(LoginUseCase);
+    resolver = module.get<AuthResolver>(AuthResolver);
+    usecase = module.get<LoginUseCase>(LoginUseCase);
+    jwtService = module.get<JwtService>(JwtService);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('login', () => {
-    const input: LoginInput = {
-      email: 'test@example.com',
+    const loginInput: LoginInput = {
+      email: 'test@test.com',
     };
 
-    it('should call login with correct values and return success', async () => {
-      const expectedLoginObject: LoginObject = {
-        token: 'token',
-      };
-      loginUseCase.execute = jest.fn().mockResolvedValue(expectedLoginObject);
+    it('should call use case with correct parameters', async () => {
+      const token = 'token123';
+      jest.spyOn(usecase, 'execute').mockResolvedValue({ token });
 
-      const result = await authResolver.login(input);
+      await resolver.login(loginInput);
 
-      expect(loginUseCase.execute).toHaveBeenCalledWith(input);
-      expect(result).toEqual(expectedLoginObject);
+      expect(usecase.execute).toHaveBeenCalledWith(loginInput);
     });
 
-    it('should return an error if login use case throws', async () => {
-      const errorMessage = 'UseCase failed';
-      loginUseCase.execute = jest
-        .fn()
-        .mockRejectedValue(new Error(errorMessage));
+    it('should return the correct object', async () => {
+      const token = 'token123';
+      jest.spyOn(usecase, 'execute').mockResolvedValue({ token });
+      jest.spyOn(jwtService, 'sign').mockReturnValue(token);
 
-      const result = await authResolver.login(input);
-      expect(result).toEqual(new Error(errorMessage));
-      expect(loginUseCase.execute).toHaveBeenCalledWith(input);
+      const response = await resolver.login(loginInput);
+
+      expect(response).toEqual({ token });
     });
   });
 });
