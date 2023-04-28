@@ -6,6 +6,7 @@ import { ContentRepository } from './content.repository';
 import { ContentResolver } from './graphql/content.resolver';
 import { CreateContentUseCase } from './usecases/create.usecase';
 import { DeleteContentUseCase } from './usecases/delete.usecase';
+import { FindOneContentUseCase } from './usecases/find-one.usecase';
 import { ListContentsUseCase } from './usecases/list.usecase';
 import { UpdateContentUsecase } from './usecases/update.usecase';
 
@@ -26,6 +27,7 @@ import { UpdateContentUsecase } from './usecases/update.usecase';
     UpdateContentUsecase,
     DeleteContentUseCase,
     ListContentsUseCase,
+    FindOneContentUseCase,
     ContentResolver,
   ],
 })

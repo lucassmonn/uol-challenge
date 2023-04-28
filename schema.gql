@@ -65,6 +65,7 @@ type Query {
   me: UserObject!
   users(input: ListUserInput!): PaginatedUser!
   contents(input: ListContentInput!): PaginatedContentObject!
+  content(_id: String!): ContentObject!
 }
 
 input ListUserInput {

@@ -1,5 +1,6 @@
 import { UserObject } from '@modules/user/graphql/user.object';
 import { ListUsersUseCase } from '@modules/user/usecases/list.usecase';
+import { UserEntity } from '@modules/user/user.entity';
 import { UseGuards } from '@nestjs/common';
 import {
   Args,
@@ -10,6 +11,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { ResolverBase } from '@shared/base/resolver.base';
+import { CurrentUser } from '@shared/decorators/current-user.decorator';
 import { AdminGuard } from '@shared/guards/admin.guard';
 import { JwtGuard } from '@shared/guards/auth.guard';
 import { MessageOutput } from '@shared/interfaces/common-output.interface';
@@ -21,6 +23,7 @@ import { ListContentInput } from '../inputs/list.input';
 import { UpdateContentInput } from '../inputs/update.input';
 import { CreateContentUseCase } from '../usecases/create.usecase';
 import { DeleteContentUseCase } from '../usecases/delete.usecase';
+import { FindOneContentUseCase } from '../usecases/find-one.usecase';
 import { ListContentsUseCase } from '../usecases/list.usecase';
 import { UpdateContentUsecase } from '../usecases/update.usecase';
 import { ContentObject, PaginatedContentObject } from './content.object';
@@ -33,6 +36,7 @@ export class ContentResolver extends ResolverBase {
     private readonly updateContentUseCase: UpdateContentUsecase,
     private readonly listUsersUseCase: ListUsersUseCase,
     private readonly listContentsUseCase: ListContentsUseCase,
+    private readonly findOneContentUseCase: FindOneContentUseCase,
   ) {
     super();
   }
@@ -64,15 +68,7 @@ export class ContentResolver extends ResolverBase {
     );
   }
 
-  @ResolveField(() => [UserObject])
-  async viewedBy(@Parent() content: ContentObject): Promise<UserObject[]> {
-    if (!content.viewedBy.length) return [];
-
-    return await this.callUseCase(this.listUsersUseCase, {
-      filter: { _id: { $in: content.viewedBy } },
-    });
-  }
-
+  @UseGuards(JwtGuard)
   @Query(() => PaginatedContentObject)
   async contents(
     @Args('input') input: ListContentInput,
@@ -81,6 +77,32 @@ export class ContentResolver extends ResolverBase {
       filter: this.buildFilter(input),
       pagination: input.pagination,
     });
+  }
+
+  @UseGuards(JwtGuard)
+  @Query(() => ContentObject)
+  async content(
+    @Args('_id') _id: string,
+    @CurrentUser() user: Partial<UserEntity>,
+  ): Promise<ContentObject> {
+    return await this.callUseCase(this.findOneContentUseCase, {
+      input: { _id: new Types.ObjectId(_id) },
+      user: {
+        _id: new Types.ObjectId(user._id),
+        role: user.role,
+      },
+    });
+  }
+
+  @ResolveField(() => [UserObject])
+  async viewedBy(@Parent() content: ContentObject): Promise<UserObject[]> {
+    if (!content.viewedBy.length) return [];
+
+    const { data } = await this.callUseCase(this.listUsersUseCase, {
+      filter: { _id: { $in: content.viewedBy } },
+    });
+
+    return data;
   }
 
   private buildFilter(input: ListContentInput): FilterQuery<ContentEntity> {
